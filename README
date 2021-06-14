@@ -1,0 +1,9 @@
+University of Cape Town
+Department of Computer Science
+CSC3022F
+ML Assignment 3 - Artificial Neural Networks
+June, 2021
+Katlego Gaveni (GVNKAT001)
+
+In this Assignment, we are given two tasks. The first involves solving the XOR problem using only Perceptrons. 
+The second task has you designing an ANN that can classify handwritten digits from the MNIST10 dataset.
