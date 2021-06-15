@@ -9,6 +9,7 @@ import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 from Perceptron import Perceptron
 import os.path
+from os import path
 import math
 import PIL.Image as Image
 
@@ -121,8 +122,14 @@ if __name__ == '__main__':
 		print ("Please enter a filepath: ")
 		# input
 		input1 = input()
-		full_img_path = os.path.expanduser(input)
-		classification(model, image_transforms, full_img_path,imageSize) 
+
+		valid = path.exists(input1)
+
+		if (valid):
+			full_img_path = os.path.expanduser(input1)
+			classification(model, image_transforms, full_img_path,imageSize) 
+		else:
+			print("please enter valid path")
 
 
 
