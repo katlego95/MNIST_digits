@@ -8,6 +8,8 @@ import torchvision
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 from Perceptron import Perceptron
+import errno
+import os
 import os.path
 from os import path
 import math
@@ -66,12 +68,12 @@ if __name__ == '__main__':
 	batch_size = 50
 	hidden_layers = 100
 	epochs=10
-	path = "./data"
+	pathtotrain = "./data"
 	input1= None
 # Expand an initial ~ component
 # in the given path
 # using os.path.expanduser() method
-	full_path = os.path.expanduser(path)
+	full_path = os.path.expanduser(pathtotrain)
 
 	#GPU accelerators 
 	device = torch.device('cude' if torch.cuda.is_available() else 'cpu')
@@ -114,8 +116,6 @@ if __name__ == '__main__':
 	image_transforms = transforms.Compose([
 		transforms.ToTensor(),
 		])
-	imagepath = "./img_74.jpg"
-	
 
 	while (input1 !='exit'):
 
@@ -123,13 +123,24 @@ if __name__ == '__main__':
 		# input
 		input1 = input()
 
-		valid = path.exists(input1)
+		if (input1=='exit' or input1=='Exit' or input1=='EXIT'):
+			break
 
-		if (valid):
-			full_img_path = os.path.expanduser(input1)
-			classification(model, image_transforms, full_img_path,imageSize) 
-		else:
+		
+		full_img_path = os.path.expanduser(input1)
+		valid = os.path.isfile(full_img_path)
+		if not valid:
+			print('File does not exist')
 			print("please enter valid path")
+		else:
+			classification(model, image_transforms, full_img_path,imageSize) 
+
+
+
+
+		
+		
+		
 
 
 

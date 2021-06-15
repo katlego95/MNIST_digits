@@ -1,14 +1,19 @@
 import random
-import matplotlib.pyplot as plt
-import numpy
 import torch
 import torch.nn as nn
-import torch.optim as optim
 import torch.nn.functional as F
+import torch.optim as optim
+from torch.utils.data import DataLoader
 import torchvision
-from torchvision import transforms, datasets 
-import math
+import torchvision.transforms as transforms
+import torchvision.datasets as datasets
 from Perceptron import Perceptron
+import errno
+import os
+import os.path
+from os import path
+import math
+import PIL.Image as Image
 
 class NN(nn.Module):
 
@@ -79,7 +84,7 @@ if __name__ == '__main__':
 	criterion = nn.MSELoss()
 	optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 	#training
-	net_loss = []
+	
 	for i in range(epoch):
 		for x, target in zip(training_inputs, y):
 			optimizer.zero_grad()   # zero the gradient buffers
