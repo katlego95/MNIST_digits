@@ -23,5 +23,26 @@ class NN(object):
 
 if __name__ == '__main__':
 
+	Size = 28*28
+	digits = 10
+	learning_rate = 0.001
+	batch_size = 40
+	hidden_layers = 100
+
+	#GPU accelerators 
+	device = torch.device('cude' if torch.cuda.is_available() else 'cpu')
+
+	#load data fron Mnist training sets 
+
+	training_data = datasets.MNIST(root='./MNIST', train=True, transfrom=transfrom.ToTensor(), download=False)
+	test_data = datasets.MNIST(root="./MNIST", train=False,transfrom=transforms.ToTensor(), download=False)
+
+	training_loader = torch.utils.data.DataLoader(dataset=training_data, batch_size=batch_size,shuffle=True, num_workers=2)
+	test_loader = torch.utils.data.DataLoader(dataset=test_data, batch_size=batch_size,shuffle=False, num_workers=2)
+
+
+
+
+
 
 
