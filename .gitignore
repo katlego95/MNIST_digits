@@ -4,5 +4,6 @@
 #Ignore virtual environment
 /venv/
 
-#Ignore MNIST data sets 
+#Ignore MNIST data sets
+/data/ 
 /MNIST/
