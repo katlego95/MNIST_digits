@@ -2,10 +2,27 @@ import random
 import matplotlib.pyplot as plt
 import numpy
 import torch
+import torch.nn as nn
+import torch.nn.functional as F
 import torchvision
-import math
 from torchvision import transforms, datasets 
+import math
 from Perceptron import Perceptron
+
+
+
+class Net(nn.Module):
+
+    def __init__(self):
+        super(Net, self).__init__()
+        self.fc1 = nn.Linear(2, 3, True)
+        self.fc2 = nn.Linear(3, 1, True)
+
+    def forward(self, x):
+        x = F.sigmoid(self.fc1(x))
+        x = self.fc2(x)
+        return x
+
 
 if __name__ == '__main__':
 
@@ -49,10 +66,15 @@ if __name__ == '__main__':
 	validate_data_x1 = torch.from_numpy(validate_examples_x1).clone().view(-1, 1)
 	validate_data_x2 = torch.from_numpy(validate_examples_x2).clone().view(-1, 1)
 	validate_labels_y = torch.from_numpy(validate_labels).clone().view(-1, 1)
-
 	# Combine X1 and X2
-  training_inputs = torch.hstack([training_data_x1, training_data_x2])
-  validate_inputs = torch.hstack([validate_data_x1, validate_data_x2])
+	training_inputs = torch.hstack([training_data_x1, training_data_x2])
+	validate_inputs = torch.hstack([validate_data_x1, validate_data_x2])
+
+	m = nn.Linear(2, 1)
+	input = torch.randn(128, 2)
+	output = m(input)
+	print(output.size())
+
 
 
 
