@@ -4,6 +4,10 @@
 #Ignore virtual environment
 /venv/
 
+#ignore images
+.jpg
+.png
+
 #Ignore MNIST data sets
 /data/ 
 /MNIST/
