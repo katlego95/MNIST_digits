@@ -14,7 +14,7 @@ import os
 import os.path
 from os import path
 import math
-import PIL.Image as Image
+
 
 class NN(nn.Module):
 
@@ -29,6 +29,15 @@ class NN(nn.Module):
         x = F.sigmoid(self.hidden(x))
         x = self.fc2(x)
         return x
+
+def classification(model, data):
+	model = model.eval()
+	
+	output= model(data)
+	_, predicted = torch.max(output.data, 1)
+
+	print('XOR Gate: '+str(predicted.item()))
+	model = model.train()
 
 if __name__ == '__main__':
 
@@ -130,13 +139,14 @@ if __name__ == '__main__':
 
 	print('Constructing Network...')
 	print('Done!')
+	print('Please enter two inputs: ')
 
 	while (input1 !='exit'):
 
 		x1_user_input= []
 		x2_user_input= []
 
-		print('Please enter two inputs: ')
+		
 		input1 = input()
 
 		if (input1=='exit' or input1=='Exit' or input1=='EXIT'):
@@ -159,7 +169,8 @@ if __name__ == '__main__':
 
 			user_input = torch.hstack([x1_torch, x2_torch])
 
-			classification(model, image_transforms, full_img_path,imageSize)
+			classification(model, user_input)
+			print('Please enter two inputs: ')
 
     	else:
 
