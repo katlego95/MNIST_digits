@@ -56,3 +56,6 @@ class Perceptron:
 				print('Perceptron failed on example' + str(examples[i]) + '\nPredicted: ' + str(prediction) + ' Correct Output: ' + str(labels[i]))
 
 		return num_correct / len(examples)
+
+
+		

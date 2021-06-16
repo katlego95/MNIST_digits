@@ -1,6 +1,24 @@
 import random
 from Perceptron import Perceptron
 
+def classification(GATE_1,GATE_2,GATE_3,GATE_4,user_input):
+
+	NAND1_output = GATE_1.activate(user_input)
+
+	NAND2_input = (user_input[0],NAND1_output)
+
+	NAND2_output = GATE_2.activate(NAND2_input)
+
+	NAND3_input = (user_input[1],NAND1_output)
+
+	NAND3_output = GATE_3.activate(NAND3_input)
+
+	NAND4_input = (NAND2_output,NAND3_output)
+
+	NAND4_output = GATE_4.activate(NAND4_input)
+
+	print('XOR Gate: ' + str(NAND4_output))
+
 
 if __name__ == '__main__':
 
@@ -47,21 +65,21 @@ if __name__ == '__main__':
 	done = False
 	input1= None
 
-	print(NAND1.weights)
+	#print(NAND1.weights)
 	valid_percentage1 = NAND1.validate(validate_examples, validate_labels, verbose=True)
-	print(valid_percentage1)
+	#print(valid_percentage1)
 
-	print(NAND2.weights)
+	#print(NAND2.weights)
 	valid_percentage2 = NAND2.validate(validate_examples, validate_labels, verbose=True)
-	print(valid_percentage1)
+	#print(valid_percentage1)
 
-	print(NAND3.weights)
+	#print(NAND3.weights)
 	valid_percentage3 = NAND3.validate(validate_examples, validate_labels, verbose=True)
-	print(valid_percentage1)
+	#print(valid_percentage1)
 
-	print(NAND4.weights)
+	#print(NAND4.weights)
 	valid_percentage4 = NAND4.validate(validate_examples, validate_labels, verbose=True)
-	print(valid_percentage1)
+	#print(valid_percentage1)
 
 	i1 = 0
 	i2 = 0
@@ -124,9 +142,10 @@ if __name__ == '__main__':
 			break
 
 		x, y = map(float, input1.split())
-		print (user_input)
+		user_example = (x,y)
 
-		classification(model, user_input)
+		classification(NAND1,NAND2,NAND3,NAND4, user_example)
+		
 		print('Please enter two inputs: ')
 
 
