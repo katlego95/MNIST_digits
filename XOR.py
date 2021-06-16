@@ -1,4 +1,5 @@
 import random
+import numpy
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -37,7 +38,7 @@ if __name__ == '__main__':
 	num_train = 1500
 	num_valid = 1500
 	input_size = 2
-	epoch = 10
+	epochs = 10
 	learning_rate = 0.001
 	input_size= 2
 	hidden_layers= 10
@@ -72,10 +73,21 @@ if __name__ == '__main__':
 	training_labels= numpy.array(t_labels)
 	validate_labels = numpy.array(v_labels)
 
+	XOR_x1 = XOR_x1.astype(numpy.float32)
+	XOR_x2 = XOR_x2.astype(numpy.float32)
+	XOR_labels = XOR_labels.astype(numpy.float32)
+
+	training_examples_x1 =training_examples_x1.astype(numpy.float32)
+	training_examples_x2 = training_examples_x2.astype(numpy.float32)
+	training_labels = training_labels.astype(numpy.float32)
+
+	validate_examples_x1 = validate_examples_x1.astype(numpy.float32)
+	validate_examples_x2 = validate_examples_x2.astype(numpy.float32)
+	validate_labels = validate_labels.astype(numpy.float32)
+
 	XOR_x1 = torch.from_numpy(XOR_x1).clone().view(-1, 1)
 	XOR_x2 = torch.from_numpy(XOR_x2).clone().view(-1, 1)
 	XOR_labels  = torch.from_numpy(XOR_labels).clone().view(-1, 1)
-
 
 	x1 = torch.from_numpy(training_examples_x1).clone().view(-1, 1)
 	x2 = torch.from_numpy(training_examples_x2).clone().view(-1, 1)
@@ -85,7 +97,7 @@ if __name__ == '__main__':
 	validate_data_x2 = torch.from_numpy(validate_examples_x2).clone().view(-1, 1)
 	validate_labels_y = torch.from_numpy(validate_labels).clone().view(-1, 1)
 	# Combine X1 and X2
-	XOR_gate = 
+	XOR_gate_inputs = torch.hstack([XOR_x1, XOR_x2])
 	training_inputs = torch.hstack([x1, x2])
 	validate_inputs = torch.hstack([validate_data_x1, validate_data_x2])
 
@@ -95,11 +107,30 @@ if __name__ == '__main__':
 	optimizer = optim.SGD(model.parameters(), lr=learning_rate)
 	#training
 
-
-	for epoch in range (epoch): # 1 epoch means network has seen entire datatset
-			for batch_step, (data, targets) in enumerate(training_inputs):
+	for epoch in range (epochs): # 1 epoch means network has seen entire datatset
+			for data, targets in zip(XOR_gate_inputs,XOR_labels):
 				data = data.to(device)
 				targets = targets.to(device=device)
+				output= model(data)
+				loss = criterion(output, targets)
+				optimizer.zero_grad()
+				loss.backward()
+				optimizer.step()
+
+			for data, targets in zip(training_inputs,y):
+				data = data.to(device)
+				targets = targets.to(device=device)
+				output= model(data)
+				loss = criterion(output, targets)
+				optimizer.zero_grad()
+				loss.backward()
+				optimizer.step()
+
+				print('Epoch: {}/{}, loss: {:.4f}'.format(epoch+1, epochs, loss.item()))
+
+	print('Constructing Network...')
+	print('Done!')
+	print('Please enter two inputs: ')
 
 
 
