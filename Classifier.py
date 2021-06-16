@@ -59,6 +59,7 @@ def classification(model, image_transforms, image_path, imageSize):
 	_, predicted = torch.max(output.data, 1)
 
 	print('Classifier: '+str(predicted.item()))
+	model = model.train()
 
 if __name__ == '__main__':
 
@@ -125,7 +126,6 @@ if __name__ == '__main__':
 
 		if (input1=='exit' or input1=='Exit' or input1=='EXIT'):
 			break
-
 		
 		full_img_path = os.path.expanduser(input1)
 		valid = os.path.isfile(full_img_path)
