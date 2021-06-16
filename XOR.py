@@ -130,7 +130,42 @@ if __name__ == '__main__':
 
 	print('Constructing Network...')
 	print('Done!')
-	print('Please enter two inputs: ')
+
+	while (input1 !='exit'):
+
+		x1_user_input= []
+		x2_user_input= []
+
+		print('Please enter two inputs: ')
+		input1 = input()
+
+		if (input1=='exit' or input1=='Exit' or input1=='EXIT'):
+			break
+
+		x, y = map(int, input1.split())
+
+		if (x.strip().isdigit()) and (y.strip().isdigit()):
+			x1_user_input.append(x)
+			x2_user_input.append(y)
+
+			x1_numpy= numpy.array(x1_user_input)
+			x2_numpy = numpy.array(x2_user_input)
+
+			x1_numpy = x1_numpy.astype(numpy.float32)
+			x2_numpy = x2_numpy.astype(numpy.float32)
+
+			x1_torch = torch.from_numpy(x1_numpy).clone().view(-1, 1)
+			x2_torch = torch.from_numpy(x2_numpy).clone().view(-1, 1)
+
+			user_input = torch.hstack([x1_torch, x2_torch])
+
+			classification(model, image_transforms, full_img_path,imageSize)
+
+    	else:
+
+        	print("please enter valid digits")
+
+			 
 
 
 
