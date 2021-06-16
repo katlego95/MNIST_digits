@@ -90,7 +90,6 @@ if __name__ == '__main__':
 		while valid_percentage1 < 0.98:
 			i1 += 1
 			NAND1.train(training_examples, training_labels, 0.2)  # Train our Perceptron
-			print(NAND1.weights)
 			valid_percentage = NAND1.validate(validate_examples, validate_labels, verbose=True) # Validate it
 			print(valid_percentage)
 			if i1 == 1000: 
@@ -130,11 +129,9 @@ if __name__ == '__main__':
 		# You shouldn't need to do this as your networks may require much longer to train. 
 		
 	print('Please enter two inputs: ')
+	print('type exit to terminate programme')
 
 	while (input1 !='exit'):
-
-		x1_user_input= []
-		x2_user_input= []
 
 		input1 = input()
 
