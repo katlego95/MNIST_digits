@@ -45,6 +45,7 @@ if __name__ == '__main__':
 	NAND4 = Perceptron(2, bias=-0.75)
 
 	done = False
+	input1= None
 
 	print(NAND1.weights)
 	valid_percentage1 = NAND1.validate(validate_examples, validate_labels, verbose=True)
@@ -76,40 +77,57 @@ if __name__ == '__main__':
 			print(valid_percentage)
 			if i1 == 1000: 
 				break
+		print('------------------------------------------------------')
 		print('Training NAND GATE_2...')
 		while valid_percentage2 < 0.98:
 			i2 += 1
 			NAND2.train(training_examples, training_labels, 0.2)  # Train our Perceptron
-			print(NAND2.weights)
 			valid_percentage = NAND2.validate(validate_examples, validate_labels, verbose=True) # Validate it
 			print(valid_percentage)
 			if i2 == 1000: 
 				break
+		print('------------------------------------------------------')
 		print('Training NAND GATE_3...')
 		while valid_percentage3 < 0.98:
 			i3 += 1
 			NAND3.train(training_examples, training_labels, 0.2)  # Train our Perceptron
-			print(NAND3.weights)
 			valid_percentage = NAND3.validate(validate_examples, validate_labels, verbose=True) # Validate it
 			print(valid_percentage)
 			if i3 == 1000: 
 				break
+		print('------------------------------------------------------')
 		print('Training NAND GATE_4...')
 		while valid_percentage4 < 0.98:
 			i4 += 1
 			NAND4.train(training_examples, training_labels, 0.2)  # Train our Perceptron
-			print(NAND4.weights)
 			valid_percentage = NAND4.validate(validate_examples, validate_labels, verbose=True) # Validate it
 			print(valid_percentage)
 			if i4 == 1000: 
 				break
 		print('Constructing Network...')
 		print('Done!')
+		print('------------------------------------------------------')
 		done = True
 		# This is just to break the training if it takes over 50 iterations. (For demonstration purposes)
 		# You shouldn't need to do this as your networks may require much longer to train. 
 		
 	print('Please enter two inputs: ')
+
+	while (input1 !='exit'):
+
+		x1_user_input= []
+		x2_user_input= []
+
+		input1 = input()
+
+		if (input1=='exit' or input1=='Exit' or input1=='EXIT'):
+			break
+
+		x, y = map(float, input1.split())
+		print (user_input)
+
+		classification(model, user_input)
+		print('Please enter two inputs: ')
 
 
 
