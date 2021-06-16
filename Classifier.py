@@ -100,6 +100,7 @@ if __name__ == '__main__':
 	for epoch in range (epochs): # 1 epoch means network has seen entire datatset
 		for batch_step, (data, targets) in enumerate(training_loader):
 			data = data.reshape(-1, imageSize).to(device)
+			
 			targets = targets.to(device=device)
 
 			output= model(data)

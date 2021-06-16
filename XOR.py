@@ -22,11 +22,11 @@ def classification(GATE_1,GATE_2,GATE_3,GATE_4,user_input):
 
 if __name__ == '__main__':
 
-
 	generate_training_set = True
-	num_train = 100
+	num_train = 800
 	generate_validation_set = True
-	num_valid = 100
+	num_valid = 800
+	epoch = 50000
 
 	training_examples = [[1.0, 1.0],
 						[1.0, 0.0],
@@ -41,9 +41,35 @@ if __name__ == '__main__':
 	if generate_training_set:
 		training_examples = []
 		training_labels = []
+		half = num_train/2
 
-		for i in range(num_train):
+		for i in range(100):
+			training_examples.append([random.uniform(0.0, 0.74), random.uniform(0.0, 0.74)])
+
+		for i in range(100):
+			training_examples.append([random.uniform(0.75, 1), random.uniform(0.0, 0.74)])
+
+		for i in range(100):
+			training_examples.append([random.uniform(0.0, 0.74), random.uniform(0.75, 1.0)])
+
+		for i in range(100):
+			training_examples.append([random.uniform(0.75, 1.0), random.uniform(0.75, 1.0)])
+
+		for i in range(100):
 			training_examples.append([random.random(), random.random()])
+
+		for i in range(100):
+			training_examples.append([random.uniform(-1.0, 0.0), random.uniform(0.75, 1.0)])
+
+		for i in range(100):
+			training_examples.append([random.uniform(0.75, 1.0), random.uniform(-1.0, 0.0)])
+
+		for i in range(100):
+			training_examples.append([random.uniform(-1.0, 0.0), random.uniform(-1.0, 0.0)])
+
+		random.shuffle(training_examples)
+		
+		for i in range(num_train):
 			if (training_examples[i][0] >= 0.75 and training_examples[i][1] >= 0.75): 
 				t_label=0.0
 			else:
@@ -55,12 +81,38 @@ if __name__ == '__main__':
 		validate_examples = []
 		validate_labels = []
 
-		for i in range(num_train):
+		for i in range(100):
+			validate_examples.append([random.uniform(0.0, 0.74), random.uniform(0.0, 0.74)])
+
+		for i in range(100):
+			validate_examples.append([random.uniform(0.75, 1), random.uniform(0.0, 0.74)])
+
+		for i in range(100):
+			validate_examples.append([random.uniform(0.0, 0.74), random.uniform(0.75, 1.0)])
+
+		for i in range(100):
+			validate_examples.append([random.uniform(0.75, 1), random.uniform(0.75, 1.0)])
+
+		for i in range(100):
 			validate_examples.append([random.random(), random.random()])
+
+		for i in range(100):
+			validate_examples.append([random.uniform(-1.0, 0.0), random.uniform(0.75, 1.0)])
+
+		for i in range(100):
+			validate_examples.append([random.uniform(0.75, 1.0), random.uniform(-1.0, 0.0)])
+
+		for i in range(100):
+			validate_examples.append([random.uniform(-1.0, 0.0), random.uniform(-1.0, 0.0)])
+
+		random.shuffle(validate_examples)
+
+		for i in range(num_valid):
 			if (validate_examples[i][0] >= 0.75 and validate_examples[i][1] >= 0.75): 
 				v_label=0.0
 			else:
 				v_label=1.0
+			# We want our perceptron to be noise tolerant, so we label all examples where x1 and x2 > 0.8 as 1.0
 			validate_labels.append(v_label)
 
 	test_d = []
@@ -74,26 +126,17 @@ if __name__ == '__main__':
 		test_d.append(train_d)
 		validate_d.append(vali_d)
 
-	print('training data')
-	for i in range(num_train):
-		print(test_d[i])
-	print('------------------------------------------------------')
-	print('validation data')
-	for i in range(num_train):
-		print(validate_d[i])
-	print('------------------------------------------------------')
 	
 
-
 	# Create Perceptron
-	NAND1 = Perceptron(2, bias=-1.5)
-	NAND2 = Perceptron(2, bias=-1.5)
-	NAND3 = Perceptron(2, bias=-1.5)
-	NAND4 = Perceptron(2, bias=-1.5)
+	NAND1 = Perceptron(2, bias=1.0)
+	NAND2 = Perceptron(2, bias=1.0)
+	NAND3 = Perceptron(2, bias=1.0)
+	NAND4 = Perceptron(2, bias=1.0)
 
 	done = False
 	input1= None
-	learning_rate = 0.2
+	learning_rate = 0.01
 
 	#print(NAND1.weights)
 	valid_percentage1 = NAND1.validate(validate_examples, validate_labels, verbose=False)
@@ -125,32 +168,36 @@ if __name__ == '__main__':
 			i1 += 1
 			NAND1.train(training_examples, training_labels, learning_rate)  # Train our Perceptron
 			valid_percentage1 = NAND1.validate(validate_examples, validate_labels, verbose=False) # Validate it
-			if i1 == 10000: 
+			if i1 == epoch: 
 				break
+		print(i1)
 		print('------------------------------------------------------')
 		print('Training NAND GATE_2...')
 		while valid_percentage2 < 0.98:
 			i2 += 1
 			NAND2.train(training_examples, training_labels, learning_rate)  # Train our Perceptron
 			valid_percentage2 = NAND2.validate(validate_examples, validate_labels, verbose=False) # Validate it
-			if i2 == 10000:
+			if i2 == epoch:
 				break
+		print(i2)
 		print('------------------------------------------------------')
 		print('Training NAND GATE_3...')
 		while valid_percentage3 < 0.98:
 			i3 += 1
 			NAND3.train(training_examples, training_labels, learning_rate)  # Train our Perceptron
 			valid_percentage3 = NAND3.validate(validate_examples, validate_labels, verbose=False) # Validate it
-			if i3 == 10000: 
+			if i3 == epoch: 
 				break
+		print(i3)
 		print('------------------------------------------------------')
 		print('Training NAND GATE_4...')
 		while valid_percentage4 < 0.98:
 			i4 += 1
 			NAND4.train(training_examples, training_labels, learning_rate)  # Train our Perceptron
 			valid_percentage4 = NAND4.validate(validate_examples, validate_labels, verbose=False) # Validate it
-			if i4 == 10000: 
+			if i4 == epoch: 
 				break
+		print(i4)
 		print('Done!')
 		print('------------------------------------------------------')
 		done = True
