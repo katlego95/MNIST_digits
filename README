@@ -5,5 +5,19 @@ ML Assignment 3 - Artificial Neural Networks
 June, 2021
 Katlego Gaveni (GVNKAT001)
 
-In this Assignment, we are given two tasks. The first involves solving the XOR problem using only Perceptrons. 
+In this Assignment, we are given two tasks. The first involves solving the XOR problem using only Perceptrons.
 The second task has you designing an ANN that can classify handwritten digits from the MNIST10 dataset.
+
+The project contains these main files:
+Classifier.py
+Perceptron.py
+XOR.py
+GVNKAT001-MLAssignment 3.pdf
+
+
+Part2 : CLassifier.py
+NB
+Please put the MNIST data set in the project directory in this format :
+create  a directory in the project home directory called ‘data’ , in that directory place the MNIST data set
+
+When loading images please put images in project home directory and the enter the image name on the command line as user input
